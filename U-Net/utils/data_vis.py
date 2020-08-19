@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 
-
 def plot_img_and_mask(img, mask):
     classes = mask.shape[2] if len(mask.shape) > 2 else 1
     fig, ax = plt.subplots(1, classes + 1)

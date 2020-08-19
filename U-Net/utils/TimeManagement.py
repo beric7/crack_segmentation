@@ -1,7 +1,6 @@
 import time
 import logging
 
-
 class TimeManager:
     def __init__(self):
         self.startTime = time.time()

@@ -74,11 +74,3 @@ if __name__ == "__main__":
             imageio.imwrite("{}_aug_{}{}".format(dir_out_mask + pathsplit[0], augNumPerImage, ".png"), mask)
             pbar.update(1)
     
-    
-    
-    
-    
-    
-    
-    
-
