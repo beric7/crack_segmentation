@@ -13,16 +13,20 @@ Set up your dataset into two folders:
 Note: This is required because when you specify the datas `/path/to/dataset/`, these two folders are required unde it. For example, `/home/CFD/train/img` and `/home/CFD/train/mask`
 
 There are many configurable parameter are available. To access it, use:
-```python crack.py -h
+```bash
+python crack.py -h
 ```
 Train a new model starting from pre-trained COCO weights
-```python3 crack.py train --dataset=/path/to/crack/dataset --weights=coco
+```bash
+python3 crack.py train --dataset=/path/to/crack/dataset --weights=coco
 ```
 Resume training a model that you had trained earlier:
-```python3 crack.py train --dataset=/path/to/crack/dataset --weights=last
+```bash
+python3 crack.py train --dataset=/path/to/crack/dataset --weights=last
 ```
 Predict and apply splash using the weight:
-```python3 crack.py splash --weights=/path/to/mask_rcnn/mask_rcnn_crack.h5 --image=<file name or URL>
+```bash
+python3 crack.py splash --weights=/path/to/mask_rcnn/mask_rcnn_crack.h5 --image=<file name or URL>
 ```
 ## mask_train.sh
 This is for ARC online training.
