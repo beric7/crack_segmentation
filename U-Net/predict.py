@@ -51,13 +51,12 @@ def get_args():
     parser = argparse.ArgumentParser(description='Predict masks from input images',
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--model', '-m', default='MODEL.pth',
-                        metavar='FILE',
-                        help="Specify the file in which the model is stored")
+                        metavar='FILE',help="Specify the file in which the model is stored", required=True)
     parser.add_argument('--input', '-i', metavar='INPUT', nargs='+',
-                        help='filenames of input images', required=True)
+                        help="Input folder or explicit input filenames", required=True)
 
     parser.add_argument('--output', '-o', metavar='INPUT', nargs='+',
-                        help='Filenames of ouput images')
+                        help="Output folder or explicit output filenames", required=True)
     parser.add_argument('--no-save', '-n', action='store_true',
                         help="Do not save the output masks",
                         default=False)
@@ -71,22 +70,29 @@ def get_args():
     return parser.parse_args()
 
 
-def get_output_filenames(args):
-    in_files = args.input
+def get_filenames(args):
+    in_files = get_input_filenames(args)
     out_files = []
 
-    if not args.output:
+    if os.path.isdir(args.output[0]):
         for f in in_files:
-            pathsplit = os.path.splitext(f)
-            out_files.append("{}_OUT.png".format(pathsplit[0]))
+            basename = os.path.splitext(os.path.basename(f))[0]
+            out_files.append("{}_OUT.png".format(os.path.join(args.output[0], basename)))
     elif len(in_files) != len(args.output):
         logging.error("Input files and output files are not of the same length")
         raise SystemExit()
     else:
         out_files = args.output
+        
+    return in_files, out_files
 
-    return out_files
-
+def get_input_filenames(args):
+    if os.path.isdir(args.input[0]):
+        return [os.path.join(args.input[0], file) for file in os.listdir(args.input[0]) if not file.startswith('.')]
+    else:
+        for f in args.input:
+            os.path.isfile(f)
+        return args.input
 
 def mask_to_image(mask):
     return Image.fromarray((mask * 255).astype(np.uint8))
@@ -94,8 +100,7 @@ def mask_to_image(mask):
 
 if __name__ == "__main__":
     args = get_args()
-    in_files = args.input
-    out_files = get_output_filenames(args)
+    in_files, out_files = get_filenames(args)
 
     net = UNet(n_channels=3, n_classes=1, bilinear=False)
 

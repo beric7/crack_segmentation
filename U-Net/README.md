@@ -1,5 +1,5 @@
 # U-Net for crack dectection
-This is network is implemented by **pytorch**. To start, install python packages in `requirement.txt`. There is sample ARC output file under `/sample_arc_result/` folder.
+This is network is implemented by **pytorch**. To start, install python packages in `requirement.txt`. There is a couple of sample pretrained models and ARC output files under `/sample_arc_result/` folder.
 
 ## train.py
 You need manually specify directories: **dir_img**, **dir_mask** and **dir_checkpoint** in `train.py`. 
@@ -37,11 +37,11 @@ python predict.py -h
 ```
 To predict a image with a given model:
 ```bash
-python predict.py -m /path/to/model.pth -o /path/to/output.png -i /path/to/input.jpg
+python predict.py -m /path/to/model.pth -o /path/to/output.png/or/folder -i /path/to/input.jpg/or/folder
 ```
 To predict all images in the directory with given model: ( I will provide this very quick)
 ```bash
-
+python predict.py -m /path/to/model.pth -o /path/to/output/folder -i /path/to/input/folder
 ```
 ## unet_train.sh
 This is for ARC online training.
@@ -68,7 +68,7 @@ A torch dataset class for train and test set.
 
 ## utils/TimeManager.py
 (Supplementary file)
-This is used for show time cost.
+This is used for showing time cost.
 
 ## utils/data_augmentation.py
 (Supplementary file)
